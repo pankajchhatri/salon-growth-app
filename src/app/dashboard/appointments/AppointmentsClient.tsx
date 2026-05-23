@@ -191,11 +191,33 @@ export default function AppointmentsClient({
   const endHour = 21   // 9:00 PM
   const totalMinutes = (endHour - startHour) * 60 // 720 minutes
   const rowHeight = 46 // px per 30-minutes, so 92px per hour
+  const slotHeight = 23 // px per 15-minutes, so 92px per hour
+
+  // Timezone helper to get date details in Asia/Kolkata (Salon's default timezone)
+  const getSalonTimeDetails = (isoString: string) => {
+    try {
+      const date = new Date(isoString)
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      })
+      const timeStr = formatter.format(date) // e.g. "15:30"
+      const [hStr, mStr] = timeStr.split(':')
+      return {
+        h: parseInt(hStr, 10),
+        m: parseInt(mStr, 10)
+      }
+    } catch (e) {
+      // Fallback
+      const d = new Date(isoString)
+      return { h: d.getHours(), m: d.getMinutes() }
+    }
+  }
 
   const getMinuteOffset = (isoString: string) => {
-    const dateObj = new Date(isoString)
-    const h = dateObj.getHours()
-    const m = dateObj.getMinutes()
+    const { h, m } = getSalonTimeDetails(isoString)
     const offset = (h - startHour) * 60 + m
     return Math.max(0, Math.min(totalMinutes, offset))
   }
@@ -207,14 +229,12 @@ export default function AppointmentsClient({
 
   const formatTimeRange = (startIso: string, endIso: string) => {
     const formatTime = (iso: string) => {
-      const date = new Date(iso)
-      let hours = date.getHours()
-      const minutes = date.getMinutes()
-      const ampm = hours >= 12 ? 'PM' : 'AM'
-      hours = hours % 12
-      hours = hours ? hours : 12
-      const minStr = minutes < 10 ? '0' + minutes : minutes
-      return `${hours}:${minStr} ${ampm}`
+      const { h, m } = getSalonTimeDetails(iso)
+      const ampm = h >= 12 ? 'PM' : 'AM'
+      let displayHour = h % 12
+      displayHour = displayHour ? displayHour : 12
+      const minStr = m < 10 ? '0' + m : m
+      return `${displayHour}:${minStr} ${ampm}`
     }
     return `${formatTime(startIso)} - ${formatTime(endIso)}`
   }
@@ -226,6 +246,25 @@ export default function AppointmentsClient({
     const ampm = h >= 12 ? 'PM' : 'AM'
     timeLabels.push(`${dispHour}:00 ${ampm}`)
     timeLabels.push(`${dispHour}:30 ${ampm}`)
+  }
+
+  // Generate 15-minute grid slots
+  interface GridSlot {
+    timeStr: string;
+    isMajor: boolean;
+    isHalf: boolean;
+    minutesFromStart: number;
+  }
+  const gridSlots: GridSlot[] = []
+  for (let h = startHour; h < endHour; h++) {
+    for (let m of [0, 15, 30, 45]) {
+      gridSlots.push({
+        timeStr: `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`,
+        isMajor: m === 0,
+        isHalf: m === 30,
+        minutesFromStart: (h - startHour) * 60 + m,
+      })
+    }
   }
 
   // Filter columns of staff. Stylists only see themselves.
@@ -365,16 +404,59 @@ export default function AppointmentsClient({
                 <div
                   key={idx}
                   style={{ height: `${rowHeight}px`, flexShrink: 0 }}
-                  className="pr-4 text-[9px] font-bold text-slate-500 text-right flex items-start justify-end -mt-2.5 shrink-0"
+                  className="pr-4 text-[9px] font-bold text-slate-500 text-right flex items-start justify-end shrink-0 relative"
                 >
-                  {idx % 2 === 0 ? label.split(' ')[0] : ''} {/* Only print full hours */}
-                  <span className="ml-0.5 text-[7px] text-slate-650">{idx % 2 === 0 ? label.split(' ')[1] : ''}</span>
+                  <div className="relative -top-2 flex items-center justify-end">
+                    {idx % 2 === 0 ? label.split(' ')[0] : ''} {/* Only print full hours */}
+                    <span className="ml-0.5 text-[7px] text-slate-650">{idx % 2 === 0 ? label.split(' ')[1] : ''}</span>
+                  </div>
                 </div>
               ))}
             </div>
 
             {/* Staff columns grid */}
-            <div className="flex-1 flex min-w-[600px]">
+            <div className="flex-1 flex min-w-[600px] relative">
+              {/* Current Time Indicator Line */}
+              {(() => {
+                const getSalonTodayDate = () => {
+                  try {
+                    const formatter = new Intl.DateTimeFormat('en-CA', {
+                      timeZone: 'Asia/Kolkata',
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    })
+                    return formatter.format(new Date())
+                  } catch (e) {
+                    return new Date().toISOString().split('T')[0]
+                  }
+                }
+                
+                const isToday = selectedDate === getSalonTodayDate()
+                if (!isToday || !isMounted) return null
+
+                // Current time in Asia/Kolkata
+                const now = new Date()
+                const { h, m } = getSalonTimeDetails(now.toISOString())
+                
+                if (h >= startHour && h < endHour) {
+                  const currentMinutes = (h - startHour) * 60 + m
+                  const currentTopPx = 50 + (currentMinutes * (slotHeight / 15))
+                  
+                  return (
+                    <div 
+                      className="absolute left-0 right-0 border-t-2 border-rose-500/80 z-30 pointer-events-none flex items-center"
+                      style={{ top: `${currentTopPx}px` }}
+                    >
+                      <div className="bg-rose-500 text-white text-[7.5px] font-extrabold px-1.5 py-0.5 rounded-r shadow-md">
+                        {h > 12 ? h - 12 : h}:{String(m).padStart(2, '0')} {h >= 12 ? 'PM' : 'AM'}
+                      </div>
+                    </div>
+                  )
+                }
+                return null
+              })()}
+
               {visibleStaff.map((staff) => {
                 const staffAppointments = appointmentsForDate.filter(
                   (a) => a.staff_id === staff.id
@@ -394,20 +476,24 @@ export default function AppointmentsClient({
                     {/* Timeline slots */}
                     <div 
                       className="relative"
-                      style={{ height: `${timeLabels.length * rowHeight}px` }}
+                      style={{ height: `${gridSlots.length * slotHeight}px` }}
                     >
-                      {timeLabels.map((label, idx) => (
+                      {gridSlots.map((slot, idx) => (
                         <div
                           key={idx}
                           onClick={() => {
-                            const h = startHour + Math.floor(idx / 2)
-                            const m = (idx % 2) * 30
-                            const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
-                            handleSlotClick(staff.id, timeStr)
+                            if (isStylist) return
+                            handleSlotClick(staff.id, slot.timeStr)
                           }}
-                          style={{ height: `${rowHeight}px` }}
-                          className={`border-b border-slate-800/75 hover:bg-purple-500/[0.02] transition-colors relative ${
+                          style={{ height: `${slotHeight}px` }}
+                          className={`hover:bg-purple-500/[0.02] transition-colors relative ${
                             isStylist ? 'cursor-default' : 'cursor-pointer'
+                          } ${
+                            slot.isMajor 
+                              ? 'border-b border-slate-800/75' 
+                              : slot.isHalf
+                                ? 'border-b border-slate-850/40'
+                                : 'border-b border-dashed border-slate-900/15'
                           }`}
                         />
                       ))}
@@ -417,11 +503,21 @@ export default function AppointmentsClient({
                         const topOffset = getMinuteOffset(appt.start_time)
                         const duration = getDurationMinutes(appt.start_time, appt.end_time)
                         
-                        const topPx = (topOffset / 30) * rowHeight
-                        const heightPx = (duration / 30) * rowHeight
+                        const topPx = topOffset * (slotHeight / 15)
+                        const heightPx = duration * (slotHeight / 15)
 
                         const customerName = appt.customer?.name || 'Walk In Customer'
                         const serviceNames = appt.services?.map(s => s.service?.name).join(', ') || 'Service'
+
+                        // Debug validation log
+                        console.log(`[DEBUG_ALIGNMENT] ${appt.id} (${customerName}):`, {
+                          startTime: appt.start_time,
+                          formattedRange: formatTimeRange(appt.start_time, appt.end_time),
+                          topOffsetMinutes: topOffset,
+                          durationMinutes: duration,
+                          computedTopPx: `${topPx}px`,
+                          computedHeightPx: `${heightPx}px`,
+                        })
 
                         return (
                           <div
@@ -433,6 +529,7 @@ export default function AppointmentsClient({
                             className={`absolute left-[2px] right-[2px] p-2 rounded-lg border flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-xl z-20 ${getStatusStyle(
                               appt.status
                             )}`}
+                            title={`Debug: startOffset=${topOffset}m, top=${Math.round(topPx)}px, height=${Math.round(heightPx)}px`}
                           >
                             <div className="overflow-hidden min-h-0 flex-1">
                               {/* Customer Name */}
