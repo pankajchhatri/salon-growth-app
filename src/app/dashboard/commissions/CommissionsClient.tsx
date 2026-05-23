@@ -155,7 +155,7 @@ export default function CommissionsClient({ initialCommissions, currentUser }: C
   return (
     <div className="space-y-8 relative z-10">
       {/* Title */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
             {isOwner ? 'Commission Ledger & Payroll' : 'My Commissions'}
@@ -174,7 +174,7 @@ export default function CommissionsClient({ initialCommissions, currentUser }: C
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {(
           [
             { key: 'pending', label: 'Pending Payouts', color: 'text-amber-400', bg: 'from-amber-600/10 to-amber-500/5', border: 'border-amber-500/20' },

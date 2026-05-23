@@ -163,7 +163,7 @@ export default function RetentionClient({ customers }: RetentionClientProps) {
     <div className="space-y-6 relative z-10">
       
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
             Retention Engine
