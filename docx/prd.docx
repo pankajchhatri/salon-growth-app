@@ -1,0 +1,262 @@
+PRODUCT REQUIREMENTS DOCUMENT
+Salon Growth & Operations App
+Focused MVP for customer retention, appointment management, no-show reduction, staff performance, and commission tracking
+Bring Customers Back
+Automated follow-ups and lost customer lists	Reduce No-Shows
+Smart booking calendar and reminders	Track Staff & Commissions
+Revenue, ratings, targets, and payouts
+Prepared for: Salon SaaS / App MVP Planning
+Market Context: Tier 1 Cities in India
+ 
+Document Control
+Field	Details
+Document Name	Salon Growth & Operations App - PRD
+Product Type	Salon SaaS / mobile-first business management app
+Target Market	Tier 1 city salons in India
+Version	v1.0
+Primary Users	Salon owners, managers, receptionists, stylists
+Core Product Theme	Revenue growth through repeat customers, booking control, and staff accountability
+
+Table of Contents
+1.	1. Executive Summary
+2.	2. Product Vision and Positioning
+3.	3. Problem Statement
+4.	4. Target Users and Personas
+5.	5. Product Goals and Success Metrics
+6.	6. MVP Scope
+7.	7. Functional Requirements
+8.	8. User Flows
+9.	9. Owner Dashboard
+10.	10. Non-Functional Requirements
+11.	11. MVP Roadmap
+12.	12. Out of Scope, Assumptions, and Risks
+13.	13. Appendix: Sample Messages and Commission Rules
+ 
+1. Executive Summary
+This PRD defines the MVP for a salon growth and operations app designed for salons in Tier 1 Indian cities. The product focuses on three high-impact pain points: bringing customers back, managing bookings while reducing no-shows, and tracking staff performance with automatic commission calculations.
+The app is not positioned as a generic billing tool. Its primary purpose is to help salon owners protect revenue leakage and grow repeat business by turning customer history, appointment data, and staff performance into daily operational actions.
+Core Value Proposition
+A mobile-first salon growth app that helps salon owners bring customers back, reduce missed appointments, and track staff performance with automatic commissions.
+
+2. Product Vision and Positioning
+2.1 Vision
+To become the daily operating system for modern Indian salons by helping owners increase repeat revenue, reduce appointment losses, and run staff operations with transparency.
+2.2 Positioning Statement
+For salon owners and managers in Tier 1 Indian cities, the app provides a simple, mobile-first system to manage repeat customers, appointments, staff performance, and commission payouts from one dashboard.
+2.3 Product Tagline Options
+•	Bring clients back. Reduce no-shows. Track every stylist.
+•	A salon growth app for repeat customers and staff accountability.
+•	Not just booking software - a revenue recovery system for salons.
+ 
+3. Problem Statement
+Salon owners in Tier 1 cities typically receive bookings through calls, WhatsApp, Instagram DMs, walk-ins, and receptionist-managed lists. Customer follow-ups are mostly manual. Staff revenue and commission calculations are often maintained in notebooks, spreadsheets, or memory. These gaps create revenue leakage, customer drop-offs, and staff-management friction.
+Pain Point	Current Situation	Business Impact
+Bringing customers back	Follow-ups are manual or forgotten after the first visit.	Low repeat visits, higher marketing cost, weaker customer lifetime value.
+Managing bookings and reducing no-shows	Appointments are scattered across channels and reminders are inconsistent.	Double bookings, empty slots, delayed services, direct revenue loss.
+Tracking staff performance and commissions	Staff revenue, ratings, targets, and payouts are calculated manually.	Commission errors, disputes, weak accountability, unclear staff productivity.
+
+4. Target Users and Personas
+4.1 Primary Persona: Salon Owner / Manager
+The salon owner needs a clear view of daily bookings, repeat customers, staff productivity, no-shows, and commission payouts. The owner cares most about revenue, customer retention, operational control, and staff accountability.
+Need	Product Support
+Increase repeat customers	Lost customer list, due-service reminders, WhatsApp follow-ups.
+Avoid missed revenue	Appointment calendar, confirmations, reminders, no-show tracking.
+Manage staff fairly	Staff-wise revenue, ratings, target progress, commission reports.
+
+4.2 Secondary Persona: Receptionist / Front Desk
+The receptionist needs a fast way to create appointments, check staff availability, update appointment status, and send confirmations without switching between diary, phone, and WhatsApp manually.
+4.3 Secondary Persona: Stylist / Staff Member
+The stylist needs to see assigned appointments, service details, customer notes, completed services, and earned commissions in a transparent manner.
+4.4 End Customer
+The customer needs easy booking, timely reminders, simple rescheduling, personalized offers, and confidence that their preferred stylist and services are remembered.
+5. Product Goals and Success Metrics
+5.1 Business Goals
+•	Increase repeat visit rate and customer lifetime value.
+•	Reduce no-shows and protect appointment-slot revenue.
+•	Improve staff accountability and payout accuracy.
+•	Give owners a clear daily and monthly business view.
+•	Make salon operations simple enough for non-technical teams.
+5.2 Success Metrics
+Metric Category	Metric	Desired Direction
+Customer Retention	Repeat customer rate	Increase
+Customer Retention	Customers reactivated from lost customer list	Increase
+Customer Retention	Revenue from returning customers	Increase
+Booking Management	Appointment no-show rate	Decrease
+Booking Management	Confirmed booking percentage	Increase
+Booking Management	Slot utilization percentage	Increase
+Staff Performance	Revenue per staff member	Increase
+Staff Performance	Commission calculation disputes	Decrease
+Staff Performance	Average customer rating per staff member	Increase
+
+6. MVP Scope
+The MVP must focus only on the three most important salon-owner problems. It should avoid unnecessary complexity such as inventory, loyalty wallets, advanced POS, full customer mobile apps, or multi-branch enterprise workflows in the first release.
+MVP Module	Purpose	Priority
+Customer Retention	Bring customers back through history, reminders, lost customer lists, and WhatsApp follow-ups.	Must Have
+Booking & No-Show Management	Create appointments, manage staff-wise availability, send reminders, track no-shows.	Must Have
+Staff Performance & Commissions	Track staff-wise services, revenue, ratings, targets, and automatic commissions.	Must Have
+Owner Dashboard	Show key business metrics for bookings, revenue, retention, staff, and payouts.	Must Have
+
+7. Functional Requirements
+7.1 Module 1: Customer Retention
+Objective: Help salons bring back customers at the right time with personalized follow-ups based on service history and visit frequency.
+Feature	Description	Priority
+Customer Profile	Store name, phone number, gender, birthday, visit history, preferred services, preferred staff, notes, total visits, and total spend.	High
+Service History	Automatically save service taken, service date, staff member, amount paid, feedback, and next expected visit cycle.	High
+Repeat Visit Reminders	Identify when a customer is due for haircut, facial, waxing, color touch-up, manicure, or other recurring services.	High
+Lost Customer List	Show customers inactive for 30, 60, 90, and 180 days.	High
+WhatsApp Follow-Up Campaigns	Allow salon to send recall, offer, birthday, and reactivation messages through templates.	High
+Birthday / Anniversary Offers	Detect upcoming occasions and enable personalized offers.	Medium
+Customer Segments	Segment customers by high-spend, inactive, frequent visitor, first-time visitor, and preferred service.	Medium
+
+7.1.1 Repeat Reminder Logic
+Service Type	Suggested Reminder Cycle	Example Trigger
+Haircut	30-45 days	Send reminder 35 days after last haircut.
+Hair color touch-up	25-35 days	Send reminder 28 days after last color service.
+Facial	30 days	Send reminder 27 days after last facial.
+Waxing	25-30 days	Send reminder 25 days after last waxing service.
+Manicure / Pedicure	20-30 days	Send reminder 21 days after last service.
+
+7.2 Module 2: Booking & No-Show Management
+Objective: Give salons a clean, staff-wise appointment calendar and reduce revenue loss from forgotten, cancelled, or missed appointments.
+Feature	Description	Priority
+Appointment Calendar	Daily, weekly, staff-wise, and service-wise views of all appointments.	High
+Create Booking	Create appointments with customer, phone number, service, staff, date, time, duration, and booking source.	High
+Staff-Wise Availability	Prevent double booking by checking existing appointments and service duration.	High
+Auto Reminders	Send 24-hour and 2-hour reminders using WhatsApp/SMS/push where available.	High
+Confirm / Reschedule / Cancel	Allow customer or staff to update appointment status.	High
+No-Show Marking	Allow staff/receptionist to mark no-show after appointment time.	High
+No-Show Risk Tag	Classify customers as low, medium, or high risk based on repeated no-shows.	Medium
+Lost Revenue Estimate	Calculate estimated revenue loss from no-shows based on booked service amount.	Medium
+
+7.2.1 Appointment Statuses
+Status	Meaning	System Action
+Created	Booking is entered but not yet confirmed.	Send confirmation message.
+Confirmed	Customer has confirmed attendance.	Keep slot blocked and send reminder.
+Rescheduled	Customer requested or accepted a new time.	Update calendar and notify staff.
+Cancelled	Customer or salon cancelled appointment.	Free the slot and record reason.
+Completed	Customer attended and service was completed.	Update revenue, customer history, and staff commission.
+No-show	Customer did not attend without completing service.	Record no-show and estimate lost revenue.
+
+7.3 Module 3: Staff Performance & Commission Tracking
+Objective: Make staff contribution, target achievement, service quality, and commission payouts clear and automatic.
+Feature	Description	Priority
+Staff Profile	Store name, role, phone number, services handled, commission structure, targets, and attendance status.	High
+Staff-Wise Service Assignment	Every completed service must be linked to a staff member.	High
+Revenue Tracking	Calculate revenue generated by each staff member daily, weekly, and monthly.	High
+Commission Rules	Support percentage-based, service-wise, product-sale, and target-based commission rules.	High
+Automatic Commission Calculation	Calculate payable commission after each completed service.	High
+Staff Performance Dashboard	Show revenue, completed services, ratings, repeat customers, no-show impact, and target progress.	High
+Staff Ranking	Rank staff by revenue, ratings, repeat customers, completed services, and product sales.	Medium
+
+7.3.1 Commission Rule Examples
+Rule Type	Example	Calculation
+Fixed percentage	10% commission on all completed services.	Service amount x 10%.
+Service-wise percentage	Hair color 12%, haircut 8%, facial 10%.	Apply selected service percentage.
+Target-based bonus	Extra ₹2,000 after staff crosses ₹1,00,000 monthly revenue.	Monthly revenue >= target triggers bonus.
+Product sales commission	5% commission on products sold by staff.	Product sale amount x 5%.
+
+8. User Flows
+8.1 Flow: Customer Visits Salon and Completes Service
+14.	Receptionist creates or selects customer profile.
+15.	Receptionist selects service and assigns staff member.
+16.	Service is completed and marked as completed in the app.
+17.	Bill amount is entered or imported from billing system.
+18.	Customer service history is updated automatically.
+19.	Staff revenue and commission are updated automatically.
+20.	Customer is added to future repeat-visit reminder cycle.
+8.2 Flow: Customer Books Appointment
+21.	Customer contacts salon through WhatsApp, call, Instagram, walk-in, or app.
+22.	Receptionist opens appointment calendar.
+23.	Receptionist selects service, staff member, date, and time.
+24.	System checks staff availability and estimated service duration.
+25.	Appointment is created and confirmation is sent to customer.
+26.	System sends automatic reminders before the appointment.
+27.	Appointment is marked as completed, rescheduled, cancelled, or no-show.
+8.3 Flow: Owner Reviews Staff Commission
+28.	Owner opens the staff performance dashboard.
+29.	Owner selects staff member and date range.
+30.	System shows completed services, revenue, commission, ratings, and target progress.
+31.	Owner reviews payout details.
+32.	Owner approves commission payout or exports the report.
+9. Owner Dashboard
+The owner dashboard should provide a quick view of salon health for the day and month. The dashboard must be actionable, not just informational.
+Dashboard Area	Metrics / Actions
+Bookings	Today’s bookings, confirmed bookings, completed appointments, cancelled appointments, rescheduled appointments, no-shows.
+Revenue	Today’s revenue, monthly revenue, revenue by service, revenue by staff.
+Customer Retention	Repeat customer rate, lost customers, due customers, customers reactivated.
+Staff	Top staff, low-performing staff, average rating, target progress, commission payable.
+Alerts	High-risk no-show customers, customers due for follow-up, upcoming birthdays, pending confirmations.
+
+ 
+10. Non-Functional Requirements
+Requirement	Description
+Mobile-first design	The app must work well on mobile because many salon owners and receptionists operate from phones.
+Fast booking creation	A receptionist should be able to create a booking in under 60 seconds.
+Simple UX	The interface must be easy for non-technical staff to understand.
+Cloud-based access	Owner should access data from mobile, tablet, or desktop.
+Data security	Customer phone numbers, payments, and staff payouts must be protected.
+WhatsApp/SMS integration ready	The system should be designed to integrate with messaging providers.
+Role-based access	Owner, manager, receptionist, and staff should see only relevant data.
+Scalability	MVP supports single-branch salons first; multi-branch support can come later.
+
+ 
+11. MVP Roadmap
+Phase	Features	Purpose
+Phase 1: Core Setup	Customer profiles, staff profiles, services, commission rules.	Create the operational foundation.
+Phase 2: Booking System	Appointment calendar, staff availability, appointment statuses, reminders.	Reduce booking confusion and no-shows.
+Phase 3: Retention Engine	Service history, repeat visit reminders, lost customer list, WhatsApp campaign templates.	Bring customers back consistently.
+Phase 4: Staff Performance	Revenue tracking, commission calculation, staff dashboard, export reports.	Improve accountability and payout clarity.
+Phase 5: Owner Insights	Owner dashboard, alerts, summary metrics, staff ranking.	Help owners make fast business decisions.
+
+12. Out of Scope, Assumptions, and Risks
+12.1 Out of Scope for MVP
+•	Full inventory management.
+•	Customer-facing mobile app.
+•	Advanced POS and GST accounting.
+•	Multi-branch enterprise support.
+•	AI-generated marketing campaigns.
+•	Deep Instagram DM automation.
+•	Membership wallet or loyalty points engine.
+12.2 Assumptions
+•	Most salons will already use WhatsApp heavily for customer communication.
+•	Receptionist or owner will enter bookings manually in MVP.
+•	Commission rules are simple enough to define as percentages, service-wise rules, or target bonuses.
+•	Single-branch salons are the first target segment.
+•	Owners prefer clear business metrics over complex analytics.
+12.3 Risks and Mitigations
+Risk	Impact	Mitigation
+Staff may not update appointment statuses properly.	Incomplete performance and commission data.	Keep status update simple with one-tap actions and owner alerts.
+WhatsApp integration limitations or cost.	Follow-up automation may become expensive or restricted.	Start with templates and provider-ready architecture; support SMS as fallback.
+Owners may resist data entry.	Low adoption.	Make booking and service completion flows extremely fast.
+Complex commission models.	Incorrect payout calculations.	Start with common commission types and allow manual adjustments.
+
+13. Appendix: Sample Messages and Commission Rules
+13.1 Sample Customer Retention Messages
+Use Case	Message Template
+Haircut reminder	Hi {{name}}, it may be time for your next haircut. Book your preferred slot with {{salon_name}} today.
+Facial reminder	Hi {{name}}, your next facial/glow session is due. We have slots available this week at {{salon_name}}.
+Lost customer recall	Hi {{name}}, we missed you at {{salon_name}}. Here is a special offer for your next visit this week.
+Birthday offer	Happy birthday, {{name}}! Enjoy a special birthday offer at {{salon_name}}.
+Appointment reminder	Reminder: your appointment at {{salon_name}} is scheduled for {{date}} at {{time}} with {{staff_name}}.
+
+13.2 Sample Data Fields
+Entity	Important Fields
+Customer	Name, phone, gender, birthday, anniversary, notes, total visits, total spend, last visit date, preferred staff, preferred services.
+Appointment	Customer, service, staff, date, time, duration, status, source, amount, reminders sent, no-show flag.
+Staff	Name, role, services, commission rules, target, revenue, completed services, ratings, commission payable.
+Service	Name, category, duration, price, repeat reminder cycle, eligible staff, commission percentage.
+
+ 
+13.3 MVP Acceptance Criteria
+Area	Acceptance Criteria
+Customer Retention	Owner can view inactive customers and send a follow-up message template.
+Repeat Reminders	System can show customers due for repeat services based on last visit and service cycle.
+Bookings	Receptionist can create a booking and avoid double-booking a staff member.
+Reminders	Customer can receive an appointment reminder before the appointment time.
+No-Shows	Staff or receptionist can mark an appointment as no-show and system records lost revenue estimate.
+Staff Tracking	Each completed service updates staff revenue and commission automatically.
+Dashboard	Owner can see today’s bookings, no-shows, revenue, repeat customers, and commission payable.
+
+MVP Summary
+The first release should prove one business promise: the salon owner can recover more revenue by bringing customers back, reducing missed appointments, and tracking staff payouts accurately.
+
