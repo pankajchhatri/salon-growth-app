@@ -205,6 +205,20 @@ export default function AppointmentsClient({
     return Math.max(15, Math.floor(diff / (1000 * 60)))
   }
 
+  const formatTimeRange = (startIso: string, endIso: string) => {
+    const formatTime = (iso: string) => {
+      const date = new Date(iso)
+      let hours = date.getHours()
+      const minutes = date.getMinutes()
+      const ampm = hours >= 12 ? 'PM' : 'AM'
+      hours = hours % 12
+      hours = hours ? hours : 12
+      const minStr = minutes < 10 ? '0' + minutes : minutes
+      return `${hours}:${minStr} ${ampm}`
+    }
+    return `${formatTime(startIso)} - ${formatTime(endIso)}`
+  }
+
   // Generate slots for display on the left side
   const timeLabels: string[] = []
   for (let h = startHour; h < endHour; h++) {
@@ -403,8 +417,8 @@ export default function AppointmentsClient({
                         const topOffset = getMinuteOffset(appt.start_time)
                         const duration = getDurationMinutes(appt.start_time, appt.end_time)
                         
-                        const topPx = (topOffset / 30) * rowHeight + 1
-                        const heightPx = (duration / 30) * rowHeight - 2
+                        const topPx = (topOffset / 30) * rowHeight
+                        const heightPx = (duration / 30) * rowHeight
 
                         const customerName = appt.customer?.name || 'Walk In Customer'
                         const serviceNames = appt.services?.map(s => s.service?.name).join(', ') || 'Service'
@@ -416,7 +430,7 @@ export default function AppointmentsClient({
                               top: `${topPx}px`,
                               height: `${heightPx}px`,
                             }}
-                            className={`absolute left-1.5 right-1.5 p-2.5 rounded-xl border flex flex-col justify-between transition-all hover:scale-[1.02] hover:shadow-xl z-20 ${getStatusStyle(
+                            className={`absolute left-[2px] right-[2px] p-2 rounded-lg border flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-xl z-20 ${getStatusStyle(
                               appt.status
                             )}`}
                           >
@@ -426,65 +440,73 @@ export default function AppointmentsClient({
                                 <User className="h-2.5 w-2.5 opacity-60 shrink-0" />
                                 <span className="truncate">{customerName}</span>
                               </div>
-                              {/* Service Name */}
-                              <div className="text-[9px] opacity-75 truncate mt-1 flex items-center gap-1 font-semibold">
-                                <Scissors className="h-2.5 w-2.5 opacity-60 shrink-0" />
-                                <span className="truncate">{serviceNames}</span>
+                              {/* Time Range */}
+                              <div className="text-[8px] font-bold opacity-75 mt-0.5 text-slate-350">
+                                {formatTimeRange(appt.start_time, appt.end_time)}
                               </div>
-                            </div>
-
-                            {/* bottom row info */}
-                            <div className="flex justify-between items-center mt-1.5 pt-1.5 border-t border-white/5 shrink-0">
-                              <span className="text-[8px] font-extrabold opacity-80 uppercase tracking-wider">
-                                {appt.status.replace('_', ' ')}
-                              </span>
-                              {!isStylist && appt.status !== 'completed' && appt.status !== 'cancelled' && (
-                                <div className="flex items-center gap-1 bg-slate-950/40 p-0.5 rounded-md border border-white/5">
-                                  {appt.status === 'created' && (
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation()
-                                        handleStatusChange(appt.id, 'confirmed')
-                                      }}
-                                      title="Confirm"
-                                      className="p-0.5 hover:bg-purple-500/20 rounded text-emerald-400 cursor-pointer"
-                                    >
-                                      <Check className="h-3 w-3" />
-                                    </button>
-                                  )}
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation()
-                                      openRescheduleModal(appt)
-                                    }}
-                                    title="Reschedule"
-                                    className="p-0.5 hover:bg-purple-500/20 rounded text-amber-400 cursor-pointer"
-                                  >
-                                    <Clock className="h-3 w-3" />
-                                  </button>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation()
-                                      handleStatusChange(appt.id, 'completed')
-                                    }}
-                                    title="Complete"
-                                    className="p-0.5 hover:bg-purple-500/20 rounded text-purple-400 cursor-pointer"
-                                  >
-                                    <Check className="h-3 w-3" />
-                                  </button>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation()
-                                      handleStatusChange(appt.id, 'no_show')
-                                    }}
-                                    title="No-Show"
-                                    className="p-0.5 hover:bg-purple-500/20 rounded text-rose-450 cursor-pointer"
-                                  >
-                                    <AlertTriangle className="h-3 w-3" />
-                                  </button>
+                              {/* Service Name */}
+                              {duration > 30 && (
+                                <div className="text-[9px] opacity-75 truncate mt-1 flex items-center gap-1 font-semibold">
+                                  <Scissors className="h-2.5 w-2.5 opacity-60 shrink-0" />
+                                  <span className="truncate">{serviceNames}</span>
                                 </div>
                               )}
                             </div>
+
+                            {/* bottom row info */}
+                            {duration > 30 && (
+                              <div className="flex justify-between items-center mt-1 pt-1 border-t border-white/5 shrink-0">
+                                <span className="text-[7.5px] font-extrabold opacity-80 uppercase tracking-wider">
+                                  {appt.status.replace('_', ' ')}
+                                </span>
+                                {!isStylist && appt.status !== 'completed' && appt.status !== 'cancelled' && (
+                                  <div className="flex items-center gap-1 bg-slate-950/40 p-0.5 rounded-md border border-white/5">
+                                    {appt.status === 'created' && (
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          handleStatusChange(appt.id, 'confirmed')
+                                        }}
+                                        title="Confirm"
+                                        className="p-0.5 hover:bg-purple-500/20 rounded text-emerald-400 cursor-pointer"
+                                      >
+                                        <Check className="h-3 w-3" />
+                                      </button>
+                                    )}
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        openRescheduleModal(appt)
+                                      }}
+                                      title="Reschedule"
+                                      className="p-0.5 hover:bg-purple-500/20 rounded text-amber-400 cursor-pointer"
+                                    >
+                                      <Clock className="h-3 w-3" />
+                                    </button>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleStatusChange(appt.id, 'completed')
+                                      }}
+                                      title="Complete"
+                                      className="p-0.5 hover:bg-purple-500/20 rounded text-purple-400 cursor-pointer"
+                                    >
+                                      <Check className="h-3 w-3" />
+                                    </button>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleStatusChange(appt.id, 'no_show')
+                                      }}
+                                      title="No-Show"
+                                      className="p-0.5 hover:bg-purple-500/20 rounded text-rose-450 cursor-pointer"
+                                    >
+                                      <AlertTriangle className="h-3 w-3" />
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            )}
                           </div>
                         )
                       })}
