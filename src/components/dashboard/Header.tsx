@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Bell, Search, Calendar, Sparkles, Menu } from 'lucide-react'
+import Link from 'next/link'
 
 interface HeaderProps {
   user: {
@@ -79,9 +80,12 @@ export default function Header({ user }: HeaderProps) {
 
         {/* Quick Action Button */}
         {user.role !== 'stylist' && (
-          <button className="px-3.5 py-1.5 glow-cta glow-cta-hover text-white rounded-xl text-[10px] font-bold shadow-lg transition-all flex items-center gap-1.5 cursor-pointer">
+          <Link 
+            href="/dashboard/appointments?new=true"
+            className="px-3.5 py-1.5 glow-cta glow-cta-hover text-white rounded-xl text-[10px] font-bold shadow-lg transition-all flex items-center gap-1.5 cursor-pointer"
+          >
             <span>+ New Booking</span>
-          </button>
+          </Link>
         )}
       </div>
     </header>

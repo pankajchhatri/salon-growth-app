@@ -19,7 +19,7 @@ import {
   Loader2
 } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface AppointmentsClientProps {
   currentUser: {
@@ -43,6 +43,7 @@ export default function AppointmentsClient({
   customersList,
 }: AppointmentsClientProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar')
   const [selectedDate, setSelectedDate] = useState(() => {
     return new Date().toISOString().split('T')[0]
@@ -53,9 +54,21 @@ export default function AppointmentsClient({
   useEffect(() => {
     setIsMounted(true)
   }, [])
-  
+
   // Modals state
   const [bookingDialogOpen, setBookingDialogOpen] = useState(false)
+
+  // Listen to search params to open dialog
+  useEffect(() => {
+    if (searchParams && searchParams.get('new') === 'true') {
+      setBookingDialogOpen(true)
+      const params = new URLSearchParams(searchParams.toString())
+      params.delete('new')
+      const query = params.toString()
+      router.replace(`/dashboard/appointments${query ? `?${query}` : ''}`)
+    }
+  }, [searchParams, router])
+  
   const [rescheduleDialogOpen, setRescheduleDialogOpen] = useState(false)
   const [rescheduleTarget, setRescheduleTarget] = useState<Appointment | null>(null)
   
