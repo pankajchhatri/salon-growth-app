@@ -3,25 +3,12 @@
 import React, { useActionState, useState } from 'react'
 import Link from 'next/link'
 import { signIn } from '@/app/auth-actions'
-import { Scissors, Lock, Mail, AlertCircle, Sparkles } from 'lucide-react'
+import { Scissors, Lock, Mail, AlertCircle } from 'lucide-react'
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(signIn, null)
-  const [selectedRole, setSelectedRole] = useState<'owner' | 'stylist'>('owner')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  // Helper function to prefill credentials for easy testing
-  const handlePrefill = (role: 'owner' | 'stylist') => {
-    setSelectedRole(role)
-    if (role === 'owner') {
-      setEmail('owner@salongrowth.com')
-      setPassword('password123')
-    } else {
-      setEmail('stylist@salongrowth.com')
-      setPassword('password123')
-    }
-  }
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -52,39 +39,6 @@ export default function LoginPage() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md z-10 px-4">
         <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 py-8 px-4 shadow-2xl rounded-3xl sm:px-10">
           
-          {/* Quick-test Pre-fill Buttons */}
-          <div className="mb-6">
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 text-center">
-              Testing Assistant (Pre-fill Credentials)
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => handlePrefill('owner')}
-                className={`py-2 px-3 text-xs font-medium rounded-xl border transition-all flex items-center justify-center gap-2 ${
-                  selectedRole === 'owner'
-                    ? 'bg-purple-600/20 border-purple-500/50 text-purple-300 shadow-inner'
-                    : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
-                }`}
-              >
-                <Sparkles className="h-3 w-3" />
-                Salon Owner
-              </button>
-              <button
-                type="button"
-                onClick={() => handlePrefill('stylist')}
-                className={`py-2 px-3 text-xs font-medium rounded-xl border transition-all flex items-center justify-center gap-2 ${
-                  selectedRole === 'stylist'
-                    ? 'bg-indigo-600/20 border-indigo-500/50 text-indigo-300 shadow-inner'
-                    : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
-                }`}
-              >
-                <Scissors className="h-3 w-3" />
-                Stylist / Staff
-              </button>
-            </div>
-          </div>
-
           <form action={formAction} className="space-y-6">
             {state?.error && (
               <div className="rounded-2xl bg-red-900/20 border border-red-500/30 p-4 flex gap-3 text-red-300 text-sm">
