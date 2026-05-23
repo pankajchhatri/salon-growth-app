@@ -229,9 +229,9 @@ export default function AppointmentsClient({
     <div className="space-y-6 relative z-10">
       
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
             Appointments Book
             {isPending && <Loader2 className="h-4 w-4 animate-spin text-purple-400" />}
           </h2>
@@ -318,7 +318,7 @@ export default function AppointmentsClient({
         /* ──── CALENDAR VIEW ──── */
         <div className="glass-card rounded-3xl overflow-hidden">
           {/* Calendar Header with Selected Date */}
-          <div className="px-6 py-4 border-b border-slate-800 bg-slate-950/30 flex items-center justify-between">
+          <div className="px-6 py-4 border-b border-slate-800 bg-slate-950/30 flex flex-col sm:flex-row gap-2 items-start sm:items-center justify-between">
             <span className="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
               <CalendarDays className="h-3.5 w-3.5" />
               {formattedDate}

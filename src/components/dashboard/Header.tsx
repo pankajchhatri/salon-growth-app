@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Bell, Search, Calendar, Sparkles } from 'lucide-react'
+import { Bell, Search, Calendar, Sparkles, Menu } from 'lucide-react'
 
 interface HeaderProps {
   user: {
@@ -32,19 +32,27 @@ export default function Header({ user }: HeaderProps) {
   return (
     <header className="h-16 border-b border-slate-900/50 bg-slate-950/25 backdrop-blur-md flex items-center justify-between px-6 shrink-0 relative z-10">
       
-      {/* Greeting and Date */}
-      <div className="flex flex-col">
-        <h1 className="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5 leading-tight">
-          {getGreeting()}, {user.displayName.split(' ')[0]}!
-          <span className="text-[9px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5 select-none uppercase tracking-wider">
-            <Sparkles className="h-2 w-2 text-purple-400" />
-            {user.role}
-          </span>
-        </h1>
-        <p className="text-[9px] text-slate-500 font-bold flex items-center gap-1 mt-0.5">
-          <Calendar className="h-3 w-3 opacity-60" />
-          {formatDate()}
-        </p>
+      {/* Mobile Toggle & Greeting */}
+      <div className="flex items-center gap-3">
+        {/* Mobile menu label */}
+        <label htmlFor="mobile-sidebar-toggle" className="p-2 -ml-2 text-slate-450 hover:text-white md:hidden cursor-pointer">
+          <Menu className="h-5 w-5" />
+        </label>
+
+        {/* Greeting and Date */}
+        <div className="flex flex-col">
+          <h1 className="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5 leading-tight">
+            {getGreeting()}, {user.displayName.split(' ')[0]}!
+            <span className="text-[9px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5 select-none uppercase tracking-wider">
+              <Sparkles className="h-2 w-2 text-purple-400" />
+              {user.role}
+            </span>
+          </h1>
+          <p className="text-[9px] text-slate-500 font-bold flex items-center gap-1 mt-0.5">
+            <Calendar className="h-3 w-3 opacity-60" />
+            {formatDate()}
+          </p>
+        </div>
       </div>
 
       {/* Header Actions */}

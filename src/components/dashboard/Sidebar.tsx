@@ -14,7 +14,8 @@ import {
   Percent, 
   Settings, 
   LogOut,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -44,21 +45,27 @@ export default function Sidebar({ user }: SidebarProps) {
   const navigationLinks = allLinks.filter(link => link.roles.includes(user.role))
 
   return (
-    <aside className="w-64 bg-slate-950/40 backdrop-blur-2xl border-r border-slate-900/60 flex flex-col h-full shrink-0 relative z-20">
+    <aside className="fixed md:static inset-y-0 left-0 z-30 w-64 bg-slate-950/80 md:bg-slate-950/40 backdrop-blur-2xl border-r border-slate-900/60 flex flex-col h-full shrink-0 -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out peer-checked:translate-x-0">
       {/* Brand Header */}
-      <div className="h-16 flex items-center px-6 border-b border-slate-900/40 gap-2 shrink-0">
-        <div className="p-2 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-xl shadow-lg shadow-purple-500/10">
-          <Scissors className="h-4.5 w-4.5 text-white" />
+      <div className="h-16 flex items-center justify-between px-6 border-b border-slate-900/40 gap-2 shrink-0">
+        <div className="flex items-center gap-2">
+          <div className="p-2 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-xl shadow-lg shadow-purple-500/10">
+            <Scissors className="h-4.5 w-4.5 text-white" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-white tracking-tight leading-tight">
+              {user.salonName}
+            </span>
+            <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 mt-0.5">
+              <Sparkles className="h-3 w-3 text-purple-400 animate-pulse" />
+              {user.role} Workspace
+            </span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <span className="text-sm font-bold text-white tracking-tight leading-tight">
-            {user.salonName}
-          </span>
-          <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 mt-0.5">
-            <Sparkles className="h-3 w-3 text-purple-400 animate-pulse" />
-            {user.role} Workspace
-          </span>
-        </div>
+        {/* Mobile Close Button */}
+        <label htmlFor="mobile-sidebar-toggle" className="p-1 text-slate-450 hover:text-white md:hidden cursor-pointer">
+          <X className="h-4.5 w-4.5" />
+        </label>
       </div>
 
       {/* Navigation Links */}

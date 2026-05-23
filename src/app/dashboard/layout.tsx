@@ -24,6 +24,15 @@ export default async function DashboardLayout({
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none z-0" />
       
       <div className="relative z-10 flex h-full w-full overflow-hidden">
+        {/* Hidden checkbox toggle for mobile sidebar */}
+        <input type="checkbox" id="mobile-sidebar-toggle" className="peer hidden" />
+
+        {/* Mobile sidebar backdrop */}
+        <label 
+          htmlFor="mobile-sidebar-toggle" 
+          className="fixed inset-0 z-20 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-350 peer-checked:opacity-100 peer-checked:pointer-events-auto md:hidden cursor-pointer" 
+        />
+
         <Sidebar user={currentUser} />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header user={currentUser} />
