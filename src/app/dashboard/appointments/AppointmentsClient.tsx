@@ -16,7 +16,8 @@ import {
   ChevronLeft,
   ChevronRight,
   CalendarDays,
-  Loader2
+  Loader2,
+  MoreVertical
 } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -49,10 +50,20 @@ export default function AppointmentsClient({
     return new Date().toISOString().split('T')[0]
   })
   
+  const [activeMenuApptId, setActiveMenuApptId] = useState<string | null>(null)
+  const [currentTime, setCurrentTime] = useState<Date>(new Date())
+  
   // Mounted state for client-only rendering of absolute items to avoid timezone mismatches
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
     setIsMounted(true)
+    
+    // Auto-update current time indicator line position every 60 seconds
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 60000)
+    
+    return () => clearInterval(timer)
   }, [])
 
   // Modals state
@@ -260,8 +271,8 @@ export default function AppointmentsClient({
     for (let m of [0, 15, 30, 45]) {
       gridSlots.push({
         timeStr: `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`,
-        isMajor: m === 0,
-        isHalf: m === 30,
+        isMajor: m === 45, // bottom border is at next full hour (e.g. 9:45 -> 10:00)
+        isHalf: m === 15,  // bottom border is at half hour (e.g. 9:15 -> 9:30)
         minutesFromStart: (h - startHour) * 60 + m,
       })
     }
@@ -436,8 +447,7 @@ export default function AppointmentsClient({
                 if (!isToday || !isMounted) return null
 
                 // Current time in Asia/Kolkata
-                const now = new Date()
-                const { h, m } = getSalonTimeDetails(now.toISOString())
+                const { h, m } = getSalonTimeDetails(currentTime.toISOString())
                 
                 if (h >= startHour && h < endHour) {
                   const currentMinutes = (h - startHour) * 60 + m
@@ -448,8 +458,9 @@ export default function AppointmentsClient({
                       className="absolute left-0 right-0 border-t-2 border-rose-500/80 z-30 pointer-events-none flex items-center"
                       style={{ top: `${currentTopPx}px` }}
                     >
-                      <div className="bg-rose-500 text-white text-[7.5px] font-extrabold px-1.5 py-0.5 rounded-r shadow-md">
-                        {h > 12 ? h - 12 : h}:{String(m).padStart(2, '0')} {h >= 12 ? 'PM' : 'AM'}
+                      <div className="absolute left-0 w-2 h-2 rounded-full bg-rose-500 transform -translate-y-1/2 shadow-md shadow-rose-950" />
+                      <div className="bg-rose-500 text-white text-[7.5px] font-extrabold px-1.5 py-0.5 rounded-r shadow-md select-none">
+                        NOW ({h > 12 ? h - 12 : h}:{String(m).padStart(2, '0')} {h >= 12 ? 'PM' : 'AM'})
                       </div>
                     </div>
                   )
@@ -468,9 +479,9 @@ export default function AppointmentsClient({
                     className="flex-1 min-w-[150px] border-r border-slate-800 relative last:border-r-0"
                   >
                     {/* Staff Sticky Header */}
-                    <div className="h-[50px] border-b border-slate-800 bg-slate-950/40 px-3 flex flex-col justify-center items-center select-none sticky top-0 z-10 backdrop-blur-md">
-                      <span className="text-xs font-bold text-slate-200">{staff.name}</span>
-                      <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-0.5">{staff.role_title}</span>
+                    <div className="h-[50px] border-b-2 border-slate-700 bg-slate-950/85 px-3 flex flex-col justify-center items-center select-none sticky top-0 z-10 backdrop-blur-md shadow-sm">
+                      <span className="text-xs font-extrabold text-slate-100">{staff.name}</span>
+                      <span className="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">{staff.role_title}</span>
                     </div>
 
                     {/* Timeline slots */}
@@ -486,16 +497,20 @@ export default function AppointmentsClient({
                             handleSlotClick(staff.id, slot.timeStr)
                           }}
                           style={{ height: `${slotHeight}px` }}
-                          className={`hover:bg-purple-500/[0.02] transition-colors relative ${
+                          className={`hover:bg-purple-500/[0.04] transition-colors relative flex items-center justify-center group ${
                             isStylist ? 'cursor-default' : 'cursor-pointer'
                           } ${
                             slot.isMajor 
-                              ? 'border-b border-slate-800/75' 
+                              ? 'border-b border-slate-700/90' 
                               : slot.isHalf
-                                ? 'border-b border-slate-850/40'
-                                : 'border-b border-dashed border-slate-900/15'
+                                ? 'border-b border-slate-800/60'
+                                : 'border-b border-dashed border-slate-900/25'
                           }`}
-                        />
+                        >
+                          {!isStylist && (
+                            <Plus className="h-3 w-3 text-purple-400/0 group-hover:text-purple-400/40 transition-all pointer-events-none" />
+                          )}
+                        </div>
                       ))}
 
                       {/* Absolute-positioned appointments cards */}
@@ -508,6 +523,11 @@ export default function AppointmentsClient({
 
                         const customerName = appt.customer?.name || 'Walk In Customer'
                         const serviceNames = appt.services?.map(s => s.service?.name).join(', ') || 'Service'
+
+                        const isMenuOpen = activeMenuApptId === appt.id
+
+                        const isCompact = duration <= 30
+                        const isIntermediate = duration > 30 && duration <= 45
 
                         // Debug validation log
                         console.log(`[DEBUG_ALIGNMENT] ${appt.id} (${customerName}):`, {
@@ -526,83 +546,133 @@ export default function AppointmentsClient({
                               top: `${topPx}px`,
                               height: `${heightPx}px`,
                             }}
-                            className={`absolute left-[2px] right-[2px] p-2 rounded-lg border flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-xl z-20 ${getStatusStyle(
+                            className={`absolute left-[2px] right-[2px] rounded-lg border flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-xl group z-20 ${getStatusStyle(
                               appt.status
-                            )}`}
+                            )} ${
+                              isCompact ? 'p-1 px-1.5' : isIntermediate ? 'p-1.5' : 'p-2'
+                            }`}
                             title={`Debug: startOffset=${topOffset}m, top=${Math.round(topPx)}px, height=${Math.round(heightPx)}px`}
                           >
-                            <div className="overflow-hidden min-h-0 flex-1">
-                              {/* Customer Name */}
-                              <div className="text-[10px] font-bold truncate text-slate-100 flex items-center gap-1">
-                                <User className="h-2.5 w-2.5 opacity-60 shrink-0" />
-                                <span className="truncate">{customerName}</span>
-                              </div>
-                              {/* Time Range */}
-                              <div className="text-[8px] font-bold opacity-75 mt-0.5 text-slate-350">
-                                {formatTimeRange(appt.start_time, appt.end_time)}
-                              </div>
-                              {/* Service Name */}
-                              {duration > 30 && (
-                                <div className="text-[9px] opacity-75 truncate mt-1 flex items-center gap-1 font-semibold">
-                                  <Scissors className="h-2.5 w-2.5 opacity-60 shrink-0" />
-                                  <span className="truncate">{serviceNames}</span>
-                                </div>
-                              )}
-                            </div>
+                            {isMenuOpen && (
+                              <div 
+                                className="fixed inset-0 z-45 bg-transparent"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setActiveMenuApptId(null)
+                                }}
+                              />
+                            )}
 
-                            {/* bottom row info */}
-                            {duration > 30 && (
-                              <div className="flex justify-between items-center mt-1 pt-1 border-t border-white/5 shrink-0">
-                                <span className="text-[7.5px] font-extrabold opacity-80 uppercase tracking-wider">
-                                  {appt.status.replace('_', ' ')}
-                                </span>
-                                {!isStylist && appt.status !== 'completed' && appt.status !== 'cancelled' && (
-                                  <div className="flex items-center gap-1 bg-slate-950/40 p-0.5 rounded-md border border-white/5">
+                            {/* Consolidate MoreVertical action menu trigger to top level of card to avoid clipping by inner overflow-hidden wrapper */}
+                            {!isStylist && appt.status !== 'completed' && appt.status !== 'cancelled' && (
+                              <div className="absolute top-1 right-1 opacity-60 hover:opacity-100 group-hover:opacity-100 transition-opacity z-50">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    setActiveMenuApptId(isMenuOpen ? null : appt.id)
+                                  }}
+                                  className="p-0.5 hover:bg-white/10 rounded-md text-slate-400 hover:text-slate-100 cursor-pointer focus:outline-none focus:ring-1 focus:ring-purple-500"
+                                  aria-label="Appointment actions"
+                                >
+                                  <MoreVertical className="h-3.5 w-3.5" />
+                                </button>
+
+                                {isMenuOpen && (
+                                  <div className="absolute right-0 mt-1 w-32 bg-slate-900 border border-slate-800 rounded-lg shadow-xl py-0.5 z-55">
                                     {appt.status === 'created' && (
                                       <button
-                                        onClick={(e) => {
-                                          e.stopPropagation()
+                                        onClick={() => {
                                           handleStatusChange(appt.id, 'confirmed')
+                                          setActiveMenuApptId(null)
                                         }}
-                                        title="Confirm"
-                                        className="p-0.5 hover:bg-purple-500/20 rounded text-emerald-400 cursor-pointer"
+                                        className="w-full text-left px-2.5 py-1 text-[8.5px] font-bold text-emerald-400 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer"
                                       >
-                                        <Check className="h-3 w-3" />
+                                        <Check className="h-2.5 w-2.5" />
+                                        Confirm
                                       </button>
                                     )}
                                     <button
-                                      onClick={(e) => {
-                                        e.stopPropagation()
+                                      onClick={() => {
                                         openRescheduleModal(appt)
+                                        setActiveMenuApptId(null)
                                       }}
-                                      title="Reschedule"
-                                      className="p-0.5 hover:bg-purple-500/20 rounded text-amber-400 cursor-pointer"
+                                      className="w-full text-left px-2.5 py-1 text-[8.5px] font-bold text-amber-400 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer"
                                     >
-                                      <Clock className="h-3 w-3" />
+                                      <Clock className="h-2.5 w-2.5" />
+                                      Reschedule
                                     </button>
                                     <button
-                                      onClick={(e) => {
-                                        e.stopPropagation()
+                                      onClick={() => {
                                         handleStatusChange(appt.id, 'completed')
+                                        setActiveMenuApptId(null)
                                       }}
-                                      title="Complete"
-                                      className="p-0.5 hover:bg-purple-500/20 rounded text-purple-400 cursor-pointer"
+                                      className="w-full text-left px-2.5 py-1 text-[8.5px] font-bold text-purple-400 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer"
                                     >
-                                      <Check className="h-3 w-3" />
+                                      <Check className="h-2.5 w-2.5" />
+                                      Complete
                                     </button>
                                     <button
-                                      onClick={(e) => {
-                                        e.stopPropagation()
+                                      onClick={() => {
                                         handleStatusChange(appt.id, 'no_show')
+                                        setActiveMenuApptId(null)
                                       }}
-                                      title="No-Show"
-                                      className="p-0.5 hover:bg-purple-500/20 rounded text-rose-450 cursor-pointer"
+                                      className="w-full text-left px-2.5 py-1 text-[8.5px] font-bold text-rose-455 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer"
                                     >
-                                      <AlertTriangle className="h-3 w-3" />
+                                      <AlertTriangle className="h-2.5 w-2.5" />
+                                      No-Show
                                     </button>
                                   </div>
                                 )}
                               </div>
+                            )}
+
+                            {isCompact ? (
+                              /* ─── COMPACT LAYOUT (<= 30 MIN) ─── */
+                              <div className="w-full h-full flex items-center justify-between gap-1 pr-4 overflow-hidden select-none">
+                                <div className="min-w-0 flex-1 flex items-center gap-1">
+                                  <User className="h-2.5 w-2.5 opacity-60 shrink-0" />
+                                  <span className="text-[10px] font-extrabold truncate text-slate-100">{customerName}</span>
+                                </div>
+                                <span className="text-[7.5px] font-bold text-slate-350 shrink-0">
+                                  {formatTimeRange(appt.start_time, appt.end_time).split(' - ')[0]}
+                                </span>
+                              </div>
+                            ) : isIntermediate ? (
+                              /* ─── INTERMEDIATE LAYOUT (<= 45 MIN) ─── */
+                              <div className="w-full h-full flex flex-col justify-between pr-4 overflow-hidden select-none">
+                                <div className="min-w-0 flex-1 flex items-center gap-1">
+                                  <User className="h-2.5 w-2.5 opacity-60 shrink-0" />
+                                  <span className="text-[10px] font-extrabold truncate text-slate-100">{customerName}</span>
+                                </div>
+                                <div className="text-[8.5px] font-bold text-slate-350 mt-0.5">
+                                  {formatTimeRange(appt.start_time, appt.end_time)}
+                                </div>
+                              </div>
+                            ) : (
+                              /* ─── FULL LAYOUT (> 45 MIN) ─── */
+                              <>
+                                <div className="overflow-hidden min-h-0 flex-1 pr-4">
+                                  <div className="text-[10.5px] font-extrabold truncate text-slate-100 flex items-center gap-1.5">
+                                    <User className="h-3 w-3 opacity-60 shrink-0" />
+                                    <span className="truncate">{customerName}</span>
+                                  </div>
+                                  
+                                  <div className="text-[8.5px] font-bold text-slate-350 mt-0.5">
+                                    {formatTimeRange(appt.start_time, appt.end_time)}
+                                  </div>
+                                  
+                                  <div className="text-[9px] opacity-75 truncate mt-1 flex items-center gap-1 font-semibold text-slate-300">
+                                    <Scissors className="h-2.5 w-2.5 opacity-60 shrink-0" />
+                                    <span className="truncate">{serviceNames}</span>
+                                  </div>
+                                </div>
+
+                                <div className="flex justify-between items-center mt-1 pt-1 border-t border-white/5 shrink-0 select-none">
+                                  <span className="text-[7.5px] font-extrabold opacity-80 uppercase tracking-wider bg-white/5 border border-white/10 px-1 py-0.5 rounded text-slate-200">
+                                    {appt.status.replace('_', ' ')}
+                                  </span>
+                                </div>
+                              </>
                             )}
                           </div>
                         )
