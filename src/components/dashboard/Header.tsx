@@ -44,8 +44,8 @@ export default function Header({ user }: HeaderProps) {
         <div className="flex flex-col">
           <h1 className="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5 leading-tight">
             {getGreeting()}, {user.displayName.split(' ')[0]}!
-            <span className="text-[9px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5 select-none uppercase tracking-wider">
-              <Sparkles className="h-2 w-2 text-purple-400" />
+            <span className="text-[9px] bg-slate-900 text-slate-350 border border-slate-800 px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5 select-none uppercase tracking-wider">
+              <Sparkles className="h-2 w-2 text-slate-500" />
               {user.role}
             </span>
           </h1>

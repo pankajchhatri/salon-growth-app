@@ -49,7 +49,7 @@ export default function Sidebar({ user }: SidebarProps) {
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-slate-900/40 gap-2 shrink-0">
         <div className="flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-xl shadow-lg shadow-purple-500/10">
+          <div className="p-2 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-xl shadow-md shadow-slate-950/60">
             <Scissors className="h-4.5 w-4.5 text-white" />
           </div>
           <div className="flex flex-col">
@@ -57,7 +57,7 @@ export default function Sidebar({ user }: SidebarProps) {
               {user.salonName}
             </span>
             <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1 mt-0.5">
-              <Sparkles className="h-3 w-3 text-purple-400 animate-pulse" />
+              <Sparkles className="h-3 w-3 text-slate-500" />
               {user.role} Workspace
             </span>
           </div>
@@ -79,13 +79,13 @@ export default function Sidebar({ user }: SidebarProps) {
               href={item.href}
               className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-[15px] font-semibold transition-all group duration-200 cursor-pointer ${
                 isActive
-                  ? 'bg-gradient-to-r from-purple-500/10 to-indigo-500/5 text-white border border-purple-500/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_15px_rgba(168,85,247,0.03)]'
+                  ? 'bg-gradient-to-r from-purple-500/10 to-indigo-500/5 text-white border border-purple-500/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]'
                   : 'text-slate-400 hover:bg-white/[0.03] hover:text-slate-200 border border-transparent'
               }`}
             >
               <Icon 
                 className={`h-5 w-5 shrink-0 transition-all duration-200 group-hover:scale-110 ${
-                  isActive ? 'text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]' : 'text-slate-500 group-hover:text-slate-300'
+                  isActive ? 'text-purple-400' : 'text-slate-500 group-hover:text-slate-300'
                 }`} 
               />
               <span>{item.name}</span>
@@ -97,7 +97,7 @@ export default function Sidebar({ user }: SidebarProps) {
       {/* User Footer Profile */}
       <div className="p-4 border-t border-slate-900/40 shrink-0 bg-slate-950/20">
         <div className="bg-slate-900/40 border border-slate-900/60 p-3.5 rounded-2xl mb-3 flex items-center gap-3 shadow-inner">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white text-sm font-bold shadow-md shadow-indigo-600/15 shrink-0">
+          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white text-sm font-bold shadow-md shadow-slate-950/40 shrink-0">
             {user.displayName.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">

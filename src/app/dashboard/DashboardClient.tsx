@@ -388,16 +388,17 @@ export default function DashboardClient({
           {/* Main KPI Stats Grid */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {/* KPI 1: Sales Revenue */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Gross Sales</p>
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">Gross Sales</p>
                 <h3 className="mt-3.5 text-[42px] font-black text-white tracking-tight leading-none flex items-center gap-0.5">
-                  <IndianRupee className="h-7 w-7 text-purple-400 shrink-0" />
+                  <IndianRupee className="h-7 w-7 text-slate-300 shrink-0" />
                   {ownerStats.totalRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-slate-800/80 text-slate-350 border border-slate-700/50 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   Revenue
                 </span>
                 <span>Active ledger period</span>
@@ -405,15 +406,16 @@ export default function DashboardClient({
             </div>
 
             {/* KPI 2: Repeat rate */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Repeat Client Rate</p>
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">Repeat Client Rate</p>
                 <h3 className="mt-3.5 text-[42px] font-black text-white tracking-tight leading-none">
                   {ownerStats.repeatRate}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-emerald-500/5 text-emerald-300 border border-emerald-500/10 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   Loyalty
                 </span>
                 <span>Overall customer pool</span>
@@ -421,16 +423,17 @@ export default function DashboardClient({
             </div>
 
             {/* KPI 3: Loss Estimate */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">No-Show Loss</p>
-                <h3 className="mt-3.5 text-[42px] font-black text-rose-400 tracking-tight leading-none flex items-center gap-0.5">
-                  <IndianRupee className="h-7 w-7 text-rose-400 shrink-0" />
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">No-Show Loss</p>
+                <h3 className="mt-3.5 text-[42px] font-black text-rose-450 tracking-tight leading-none flex items-center gap-0.5">
+                  <IndianRupee className="h-7 w-7 text-rose-350 shrink-0" />
                   {ownerStats.lostRevenue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-rose-500/5 text-rose-300 border border-rose-500/10 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   {ownerStats.lostApptsCount} missed
                 </span>
                 <span>Cancelled / No-shows</span>
@@ -438,16 +441,17 @@ export default function DashboardClient({
             </div>
 
             {/* KPI 4: Commissions Payable */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Commissions Due</p>
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">Commissions Due</p>
                 <h3 className="mt-3.5 text-[42px] font-black text-blue-400 tracking-tight leading-none flex items-center gap-0.5">
-                  <IndianRupee className="h-7 w-7 text-blue-400 shrink-0" />
+                  <IndianRupee className="h-7 w-7 text-blue-300 shrink-0" />
                   {ownerStats.pendingCommissions.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-blue-500/5 text-blue-300 border border-blue-500/10 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   Commissions
                 </span>
                 <span>Ledger pending state</span>
@@ -460,9 +464,9 @@ export default function DashboardClient({
             
             {/* Category breakdown (Progress bars) */}
             <div className="glass-card p-6 rounded-3xl space-y-6">
-              <div className="border-b border-slate-900/50 pb-4">
+              <div className="border-b border-slate-800/80 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider flex items-center gap-2.5 uppercase">
-                  <Scissors className="h-4.5 w-4.5 text-purple-400" />
+                  <Scissors className="h-4.5 w-4.5 text-slate-400" />
                   Sales by Service Category
                 </h3>
               </div>
@@ -473,15 +477,15 @@ export default function DashboardClient({
                   ownerStats.categoryBreakdown.map(({ name, value }) => {
                     const pct = Math.round((value / (ownerStats.totalRevenue || 1)) * 100)
                     return (
-                      <div key={name} className="space-y-2 bg-slate-950/20 border border-slate-900/50 p-4 rounded-2xl">
+                      <div key={name} className="space-y-2 bg-white/[0.02] border border-slate-800/60 p-4 rounded-2xl shadow-inner">
                         <div className="flex justify-between text-sm">
                           <span className="font-bold text-slate-200">{name}</span>
                           <span className="font-extrabold text-white">₹{value.toLocaleString('en-IN')}</span>
                         </div>
                         <div className="space-y-1">
-                          <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                          <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-900">
                             <div
-                              className="bg-gradient-to-r from-purple-500 to-indigo-500 h-full rounded-full"
+                              className="bg-gradient-to-r from-purple-600 to-indigo-600 h-full rounded-full"
                               style={{ width: `${pct}%` }}
                             />
                           </div>
@@ -498,7 +502,7 @@ export default function DashboardClient({
 
             {/* Bookings Status Counter */}
             <div className="glass-card p-6 rounded-3xl space-y-6">
-              <div className="border-b border-slate-900/50 pb-4">
+              <div className="border-b border-slate-800/80 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider flex items-center gap-2.5 uppercase">
                   <CalendarDays className="h-4.5 w-4.5 text-indigo-400" />
                   Booking Status Distribution
@@ -507,19 +511,19 @@ export default function DashboardClient({
               
               <div className="grid grid-cols-2 gap-3 pt-1">
                 {[
-                  { key: 'completed', label: 'Completed', val: ownerStats.statusCounts.completed, style: 'border-emerald-500/20 bg-emerald-500/[0.02] text-emerald-400', dot: 'bg-emerald-450' },
-                  { key: 'confirmed', label: 'Confirmed', val: ownerStats.statusCounts.confirmed, style: 'border-blue-500/20 bg-blue-500/[0.02] text-blue-400', dot: 'bg-blue-400' },
-                  { key: 'no_show', label: 'No-Shows', val: ownerStats.statusCounts.no_show, style: 'border-rose-500/20 bg-rose-500/[0.02] text-rose-400', dot: 'bg-rose-450' },
-                  { key: 'cancelled', label: 'Cancelled', val: ownerStats.statusCounts.cancelled, style: 'border-slate-850 bg-slate-900/20 text-slate-400', dot: 'bg-slate-500' },
-                  { key: 'rescheduled', label: 'Rescheduled', val: ownerStats.statusCounts.rescheduled, style: 'border-amber-500/20 bg-amber-500/[0.02] text-amber-400', dot: 'bg-amber-400' },
-                  { key: 'created', label: 'Created Only', val: ownerStats.statusCounts.created, style: 'border-purple-500/10 bg-purple-500/[0.01] text-purple-400', dot: 'bg-purple-400' }
+                  { key: 'completed', label: 'Completed', val: ownerStats.statusCounts.completed, style: 'border-emerald-500/15 bg-emerald-500/[0.03] text-emerald-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]', dot: 'bg-emerald-500' },
+                  { key: 'confirmed', label: 'Confirmed', val: ownerStats.statusCounts.confirmed, style: 'border-blue-500/15 bg-blue-500/[0.03] text-blue-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]', dot: 'bg-blue-500' },
+                  { key: 'no_show', label: 'No-Shows', val: ownerStats.statusCounts.no_show, style: 'border-rose-500/15 bg-rose-500/[0.03] text-rose-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]', dot: 'bg-rose-500' },
+                  { key: 'cancelled', label: 'Cancelled', val: ownerStats.statusCounts.cancelled, style: 'border-slate-800 bg-slate-900/40 text-slate-400 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]', dot: 'bg-slate-500' },
+                  { key: 'rescheduled', label: 'Rescheduled', val: ownerStats.statusCounts.rescheduled, style: 'border-amber-500/15 bg-amber-500/[0.03] text-amber-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]', dot: 'bg-amber-500' },
+                  { key: 'created', label: 'Created Only', val: ownerStats.statusCounts.created, style: 'border-slate-800 bg-slate-900/40 text-slate-350 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]', dot: 'bg-slate-400' }
                 ].map((st) => (
                   <div key={st.key} className={`border p-4 rounded-2xl flex flex-col justify-between min-h-[90px] ${st.style}`}>
                     <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider select-none">
                       <span className={`h-1.5 w-1.5 rounded-full ${st.dot}`} />
                       <span>{st.label}</span>
                     </div>
-                    <div className="text-[28px] font-black tracking-tight leading-none mt-2">
+                    <div className="text-[28px] font-black tracking-tight leading-none mt-2 text-white">
                       {st.val}
                     </div>
                   </div>
@@ -527,7 +531,7 @@ export default function DashboardClient({
               </div>
 
               {/* Total Appointments Counter */}
-              <div className="p-4 bg-slate-950/40 border border-slate-900/60 rounded-2xl flex justify-between items-center text-xs font-bold">
+              <div className="p-4 bg-white/[0.01] border border-slate-800/60 rounded-2xl flex justify-between items-center text-xs font-bold shadow-inner">
                 <span className="text-slate-400 uppercase tracking-wider">Total Operations:</span>
                 <span className="text-white text-sm font-black">{filteredAppointments.length} bookings</span>
               </div>
@@ -535,7 +539,7 @@ export default function DashboardClient({
 
             {/* Retention statistics */}
             <div className="glass-card p-6 rounded-3xl space-y-6">
-              <div className="border-b border-slate-900/50 pb-4">
+              <div className="border-b border-slate-800/80 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider flex items-center gap-2.5 uppercase">
                   <Users className="h-4.5 w-4.5 text-emerald-400" />
                   Client Retention Indicators
@@ -544,17 +548,17 @@ export default function DashboardClient({
               
               <div className="space-y-3.5 pt-1">
                 {[
-                  { label: 'Active Clients', val: ownerStats.retention.active, desc: 'Registered pool', style: 'border-purple-500/15 bg-purple-500/[0.01] text-purple-300' },
-                  { label: 'Lost Clients', val: ownerStats.retention.lost, desc: 'Inactive 30–90 days', style: 'border-rose-500/15 bg-rose-500/[0.01] text-rose-300' },
-                  { label: 'Due for Recall', val: ownerStats.retention.due, desc: 'Due for visit cycle', style: 'border-amber-500/15 bg-amber-500/[0.01] text-amber-300' },
-                  { label: 'Reactivated Clients', val: ownerStats.retention.reactivated, desc: 'Returned this month', style: 'border-emerald-500/15 bg-emerald-500/[0.01] text-emerald-300' }
+                  { label: 'Active Clients', val: ownerStats.retention.active, desc: 'Registered pool', style: 'border border-slate-800 bg-slate-900/40 text-slate-200' },
+                  { label: 'Lost Clients', val: ownerStats.retention.lost, desc: 'Inactive 30–90 days', style: 'border border-rose-500/10 bg-rose-500/[0.02] text-rose-350' },
+                  { label: 'Due for Recall', val: ownerStats.retention.due, desc: 'Due for visit cycle', style: 'border border-amber-500/10 bg-amber-500/[0.02] text-amber-350' },
+                  { label: 'Reactivated Clients', val: ownerStats.retention.reactivated, desc: 'Returned this month', style: 'border border-emerald-500/10 bg-emerald-500/[0.02] text-emerald-350' }
                 ].map((c) => (
-                  <div key={c.label} className={`border p-4 rounded-2xl flex justify-between items-center ${c.style}`}>
+                  <div key={c.label} className={`p-4 rounded-2xl flex justify-between items-center ${c.style}`}>
                     <div>
                       <p className="font-bold text-sm text-slate-200">{c.label}</p>
                       <p className="text-xs text-slate-500 font-semibold mt-0.5">{c.desc}</p>
                     </div>
-                    <span className="text-2xl font-black">{c.val}</span>
+                    <span className="text-2xl font-black text-white">{c.val}</span>
                   </div>
                 ))}
               </div>
@@ -564,12 +568,12 @@ export default function DashboardClient({
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Alerts feed */}
             <div className="lg:col-span-2 glass-card p-6 rounded-3xl space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-900/50 pb-4">
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider flex items-center gap-2.5 uppercase">
-                  <AlertTriangle className="h-4.5 w-4.5 text-purple-400 animate-pulse" />
+                  <AlertTriangle className="h-4.5 w-4.5 text-amber-500" />
                   Actionable Alerts
                 </h3>
-                <span className="text-xs text-purple-300 font-bold bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-full">
+                <span className="text-xs text-slate-300 font-bold bg-slate-800 border border-slate-700/60 px-2.5 py-1 rounded-full">
                   {alertsFeed.length} Alerts
                 </span>
               </div>
@@ -583,23 +587,23 @@ export default function DashboardClient({
                       key={alert.id}
                       className={`p-4 rounded-2xl border text-sm flex justify-between items-start gap-4 transition-all hover:bg-white/[0.01] hover:translate-x-0.5 ${
                         alert.type === 'critical'
-                          ? 'bg-rose-500/[0.02] border-rose-500/10 text-rose-300'
+                          ? 'bg-rose-500/[0.03] border-rose-500/15 text-rose-250 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]'
                           : alert.type === 'warning'
-                          ? 'bg-amber-500/[0.02] border-amber-500/10 text-amber-300'
-                          : 'bg-purple-500/[0.02] border-purple-500/10 text-purple-300'
+                          ? 'bg-amber-500/[0.03] border-amber-500/15 text-amber-250 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]'
+                          : 'bg-blue-500/[0.03] border-blue-500/15 text-blue-250 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]'
                       }`}
                     >
                       <div className="flex gap-3">
                         <span
                           className={`mt-2 h-2 w-2 rounded-full shrink-0 ${
                             alert.type === 'critical'
-                              ? 'bg-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.6)]'
+                              ? 'bg-rose-500'
                               : alert.type === 'warning'
-                              ? 'bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.6)]'
-                              : 'bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.6)]'
+                              ? 'bg-amber-500'
+                              : 'bg-blue-500'
                           }`}
                         />
-                        <span className="font-semibold text-slate-300 leading-relaxed">{alert.text}</span>
+                        <span className="font-semibold text-slate-350 leading-relaxed">{alert.text}</span>
                       </div>
                       <span className="text-xs text-slate-500 font-bold whitespace-nowrap shrink-0 mt-0.5">
                         {alert.time}
@@ -612,7 +616,7 @@ export default function DashboardClient({
 
             {/* Performance Ranking scoreboard */}
             <div className="glass-card p-6 rounded-3xl space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-900/50 pb-4">
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider flex items-center gap-2.5 uppercase">
                   <Award className="h-4.5 w-4.5 text-indigo-400" />
                   Stylist Standings
@@ -630,11 +634,11 @@ export default function DashboardClient({
                   <p className="text-sm text-slate-500 italic text-center py-6">No active staff profiles.</p>
                 ) : (
                   ownerStats.staffPerformance
-                    .sort((a, b) => b.revenue - a.revenue)
+                     .sort((a, b) => b.revenue - a.revenue)
                     .map((staff) => (
                       <div
                         key={staff.id}
-                        className="space-y-3 bg-slate-950/20 border border-slate-900/40 p-4 rounded-2xl"
+                        className="space-y-3 bg-white/[0.02] border border-slate-800/60 p-4 rounded-2xl shadow-inner"
                       >
                         <div className="flex justify-between items-start text-sm">
                           <div>
@@ -657,7 +661,7 @@ export default function DashboardClient({
                           </div>
                           <div className="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden border border-slate-900">
                             <div
-                              className="bg-gradient-to-r from-purple-500 to-indigo-500 h-full rounded-full shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+                              className="bg-gradient-to-r from-purple-600 to-indigo-600 h-full rounded-full"
                               style={{ width: `${staff.targetProgress}%` }}
                             />
                           </div>
@@ -677,16 +681,17 @@ export default function DashboardClient({
           {/* Main KPI Stats Grid */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {/* KPI 1: Sales */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">My Sales</p>
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">My Sales</p>
                 <h3 className="mt-3.5 text-[42px] font-black text-white tracking-tight leading-none flex items-center gap-0.5">
-                  <IndianRupee className="h-7 w-7 text-purple-400 shrink-0" />
+                  <IndianRupee className="h-7 w-7 text-slate-300 shrink-0" />
                   {stylistStats.sales.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-slate-800/80 text-slate-350 border border-slate-700/50 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   Personal Earnings
                 </span>
                 <span>Active ledger period</span>
@@ -694,15 +699,16 @@ export default function DashboardClient({
             </div>
 
             {/* KPI 2: Repeat Rate */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Repeat Clients</p>
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">Repeat Clients</p>
                 <h3 className="mt-3.5 text-[42px] font-black text-white tracking-tight leading-none">
                   {stylistStats.repeatRate}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-emerald-500/5 text-emerald-300 border border-emerald-500/10 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   Loyalty
                 </span>
                 <span>My customers pool</span>
@@ -710,15 +716,16 @@ export default function DashboardClient({
             </div>
 
             {/* KPI 3: Slot Utilization */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Slot Utilization</p>
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">Slot Utilization</p>
                 <h3 className="mt-3.5 text-[42px] font-black text-emerald-400 tracking-tight leading-none">
                   {stylistStats.activeCount} / {stylistStats.targetSlots}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-emerald-500/5 text-emerald-300 border border-emerald-500/10 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   {stylistStats.slotPercent}% Capacity
                 </span>
                 <span>Today vs Target limit</span>
@@ -726,15 +733,16 @@ export default function DashboardClient({
             </div>
 
             {/* KPI 4: No-Show Rate */}
-            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[160px]">
+            <div className="glass-card p-6 rounded-3xl flex flex-col justify-between min-h-[170px]">
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">No-Show Rate</p>
-                <h3 className="mt-3.5 text-[42px] font-black text-rose-400 tracking-tight leading-none">
+                <p className="text-xs font-semibold text-slate-400/80 uppercase tracking-wider">No-Show Rate</p>
+                <h3 className="mt-3.5 text-[42px] font-black text-rose-450 tracking-tight leading-none">
                   {stylistStats.noShowRate}
                 </h3>
               </div>
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
+              <div className="border-t border-slate-800/50 my-4" />
+              <div className="flex items-center justify-between text-xs font-medium text-slate-400/70">
+                <span className="bg-rose-500/5 text-rose-300 border border-rose-500/10 px-2 py-0.5 rounded-full uppercase text-[10px] font-bold">
                   Loss Control
                 </span>
                 <span>My assigned bookings</span>
@@ -745,12 +753,12 @@ export default function DashboardClient({
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Alerts Section */}
             <div className="lg:col-span-2 glass-card p-6 rounded-3xl space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-900/50 pb-4">
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider flex items-center gap-2.5 uppercase">
-                  <AlertTriangle className="h-4.5 w-4.5 text-purple-400 animate-pulse" />
+                  <AlertTriangle className="h-4.5 w-4.5 text-amber-500" />
                   Actionable Alerts
                 </h3>
-                <span className="text-xs text-purple-300 font-bold bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-full">
+                <span className="text-xs text-slate-300 font-bold bg-slate-800 border border-slate-700/60 px-2.5 py-1 rounded-full">
                   {alertsFeed.length} Alerts
                 </span>
               </div>
@@ -764,23 +772,23 @@ export default function DashboardClient({
                       key={alert.id}
                       className={`p-4 rounded-2xl border text-sm flex justify-between items-start gap-4 transition-all hover:bg-white/[0.01] hover:translate-x-0.5 ${
                         alert.type === 'critical'
-                          ? 'bg-rose-500/[0.02] border-rose-500/10 text-rose-300'
+                          ? 'bg-rose-500/[0.03] border-rose-500/15 text-rose-250 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]'
                           : alert.type === 'warning'
-                          ? 'bg-amber-500/[0.02] border-amber-500/10 text-amber-300'
-                          : 'bg-purple-500/[0.02] border-purple-500/10 text-purple-300'
+                          ? 'bg-amber-500/[0.03] border-amber-500/15 text-amber-250 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]'
+                          : 'bg-blue-500/[0.03] border-blue-500/15 text-blue-250 shadow-[inset_0_1px_1px_rgba(255,255,255,0.01)]'
                       }`}
                     >
                       <div className="flex gap-3">
                         <span
                           className={`mt-2 h-2 w-2 rounded-full shrink-0 ${
                             alert.type === 'critical'
-                              ? 'bg-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.6)]'
+                              ? 'bg-rose-500'
                               : alert.type === 'warning'
-                              ? 'bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.6)]'
-                              : 'bg-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.6)]'
+                              ? 'bg-amber-500'
+                              : 'bg-blue-500'
                           }`}
                         />
-                        <span className="font-semibold text-slate-300 leading-relaxed">{alert.text}</span>
+                        <span className="font-semibold text-slate-350 leading-relaxed">{alert.text}</span>
                       </div>
                       <span className="text-xs text-slate-500 font-bold whitespace-nowrap shrink-0 mt-0.5">
                         {alert.time}
@@ -793,7 +801,7 @@ export default function DashboardClient({
 
             {/* Stylist progress / targets */}
             <div className="glass-card p-6 rounded-3xl space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-900/50 pb-4">
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
                 <h3 className="text-sm font-bold text-white tracking-wider flex items-center gap-2.5 uppercase">
                   <Award className="h-4.5 w-4.5 text-indigo-400" />
                   My Monthly Target progress
@@ -801,7 +809,7 @@ export default function DashboardClient({
               </div>
 
               <div className="space-y-4 pt-1">
-                <div className="space-y-3 bg-slate-950/20 border border-slate-900/40 p-4 rounded-2xl">
+                <div className="space-y-3 bg-white/[0.02] border border-slate-800/60 p-4 rounded-2xl shadow-inner">
                   <div className="flex justify-between items-start text-sm">
                     <div>
                       <p className="font-bold text-slate-200 text-[14px]">
@@ -823,7 +831,7 @@ export default function DashboardClient({
                     </div>
                     <div className="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden border border-slate-900">
                       <div
-                        className="bg-gradient-to-r from-purple-500 to-indigo-500 h-full rounded-full shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+                        className="bg-gradient-to-r from-purple-600 to-indigo-600 h-full rounded-full"
                         style={{ width: `${stylistStats.targetProgress}%` }}
                       />
                     </div>
